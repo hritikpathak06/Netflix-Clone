@@ -64,13 +64,15 @@ const NavContainer = styled.div`
     width: 100%;
     justify-content: space-between;
     position: fixed;
-    z-index: 0.4rem;
+    /* z-index: 0.4rem; */
+    z-index: 999;
     align-items: center;
     transition: 0.3s ease-in-out;
     .leftSide {
       display: flex;
       align-items: center;
       gap: 2rem;
+      margin-left: 5rem;
       .logo {
         display: flex;
         justify-content: center;

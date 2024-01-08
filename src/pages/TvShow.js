@@ -1,10 +1,14 @@
 import React from "react";
+import Netflix from "./Netflix";
 
 const TvShow = () => {
   return (
-    <div>
-      <h1>Tv Show</h1>
-    </div>
+    // <div>
+    <>
+      <Netflix/>
+    </>
+    //   <h1>Tv Show</h1>
+    // </div>
   );
 };
 

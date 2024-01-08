@@ -1,42 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopNav from "../components/TopNav";
 import styled from "styled-components";
-import { AiOutlineInfoCircle } from "react-icons/ai";
-import { FaPlay } from "react-icons/fa";
+// import { AiOutlineInfoCircle } from "react-icons/ai";
+// import { FaPlay } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import Card from "../components/Card";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies, getGenres } from "../store";
+import SliderContainer from "../components/SliderContainer";
 
 const Netflix = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const generesLoaded = useSelector((state) => state.netflix.generesLoaded);
+  const movies = useSelector((state) => state.netflix.movies);
   const [isScrolled, setIsScrolled] = useState(false);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
   };
-  console.log(isScrolled);
+
+  useEffect(() => {
+    if (generesLoaded) {
+      dispatch(fetchMovies({ type: "all" }));
+    }
+  });
+
+  useEffect(() => {
+    dispatch(getGenres());
+  }, [dispatch]);
+
   return (
     <>
       <HeroContainer>
         <div className="hero">
           <TopNav isScrolled={isScrolled} />
           <img
-            src="https://www.whats-on-netflix.com/wp-content/uploads/2018/04/is-avengers-age-of-ultron-on-netflix.jpg"
+            src="https://www.m9.news/wp-content/uploads/2023/10/Leo-2023-Telugu-Movie-Review.jpg"
             alt="hero"
-            className="background-image"
           />
           <div className="container">
             <div className="title">
-              <h1>Avengers</h1>
+              <h1>Leo-Thalapathy</h1>
               <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam
-                aliquam magni ipsum quae provident voluptates nobis quod nisi,
-                deserunt accusamus!
+                It is the third instalment in the Lokesh Cinematic Universe and
+                is inspired by A History of Violence. The film follows Parthi, a
+                café owner and animal rescuer in Theog, who is pursued by
+                gangsters Antony and Harold Das who suspect him to be Antony's
+                estranged son, Leo.
               </p>
             </div>
             <div className="buttons">
-              <button className="playBtn">Play</button>
+              <button className="playBtn" onClick={() => navigate("/player")}>
+                Play
+              </button>
               <button className="moreBtn">More</button>
             </div>
           </div>
         </div>
+        {/* <Card/> */}
+        <SliderContainer movies={movies} />
       </HeroContainer>
     </>
   );
@@ -47,17 +71,18 @@ const HeroContainer = styled.div`
   .hero {
     position: relative;
     .background-image {
-      filter: brightness(40%);
+      filter: brightness(50%);
     }
     img {
-      height: 70vh;
+      height: 120vh;
       width: 100%;
+      object-fit: cover;
     }
   }
 
   .container {
     position: absolute;
-    bottom: 1rem;
+    bottom: 7rem;
     .title {
       h1 {
         margin-left: 5rem;
